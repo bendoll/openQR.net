@@ -1,4 +1,4 @@
-# openQR
+# openQR.net
 
 ## An open-source, truly free QR code generator
 
@@ -8,11 +8,11 @@ Well, I got fed up with all that, so I started this project to create a **simple
 
 ### Simple
 
-openQR is designed to be versatile, yet easy to use. Just enter some text or a URL and it spits out a QR code for you to download and do whatever you want with.
+openQR.net is designed to be versatile, yet easy to use. Just enter some text or a URL and it spits out a QR code for you to download and do whatever you want with.
 
 ### Open-Source
 
-Anyone can review the source code and verify that no personal information is collected. openQR is made available under the GNU GPL-v3 license, which basically means you can do whatever you want with this site and my code, but anything you create with it must also be made open-source.
+Anyone can review the source code and verify that no personal information is collected and no generated QR codes are stored after creation. openQR.net is made available under the GNU GPL-v3 license, which basically means you can do whatever you want with this site and my code, but anything you create with it must also be made open-source under the same license.
 
 ### Free Forever
 
@@ -20,6 +20,6 @@ This site will be completely free to use for as long as I live. No subscriptions
 
 ### Acknowledgements
 
-openQR uses the [node-qrcode](https://github.com/soldair/node-qrcode) library, which is available under the [MIT license](https://www.tldrlegal.com/license/mit-license).
+openQR.net uses the [node-qrcode](https://github.com/soldair/node-qrcode) library, which is available under the [MIT license](https://www.tldrlegal.com/license/mit-license).
 
 Special thanks to the commercial QR code generator industry, one I'm still surprised exists, and without whose greedy shenanigans I would have never been inspired to make my own alternative.
