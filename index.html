@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>openQR - Free QR Code Generator</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="js/Timestamp.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,6 +17,24 @@
         #qrcode {
             margin-top: 20px;
         }
+
+        canvas {
+            display: block;
+            margin: 20px auto;
+        }
+
+        #downloadBtn {
+            display: none;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #downloadBtn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -24,29 +43,43 @@
     <h2>Free QR Code Generator</h2>
     <input type="text" id="inputText" placeholder="Enter some text or a URL" style="width: 300px; padding: 10px;">
     <button id="generateBtn" style="padding: 10px 20px;">Generate QR Code</button>
-    <div id="qrcode"></div>
+    <canvas id="qrCanvas" style="display: none;"></canvas>
+    <button id="downloadBtn">Download QR Code</button>
 
     <script>
-        document.getElementById('generateBtn').addEventListener('click', () => {
-            const text = document.getElementById('inputText').value;
-            const qrCodeDiv = document.getElementById('qrcode');
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const qrCanvas = document.getElementById('qrCanvas');
+        const inputText = document.getElementById('inputText');
 
-            // Clear any existing QR code
-            qrCodeDiv.innerHTML = '';
+        generateBtn.addEventListener('click', () => {
+            const text = inputText.value;
+
+            // Clear previous QR code and hide the download button
+            qrCanvas.style.display = 'none';
+            downloadBtn.style.display = 'none';
 
             if (text.trim()) {
-                // Generate the QR Code
-                QRCode.toString(text, { type: 'svg' }, (error, svg) => {
+                // Generate QR code on canvas
+                QRCode.toCanvas(qrCanvas, text, { width: 512 }, (error) => {
                     if (error) {
                         console.error(error);
-                        alert('Error generating QR Code.');
+                        alert('Error generating QR Code. Please refresh the page and try again.');
                     } else {
-                        qrCodeDiv.innerHTML = svg;
+                        qrCanvas.style.display = 'block';
+                        downloadBtn.style.display = 'inline-block';
                     }
                 });
             } else {
                 alert('Please enter some text or a URL.');
             }
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = qrCanvas.toDataURL('image/png'); // Get the canvas content as a PNG
+            link.download = 'openQR_' + getCurrentTimestamp() + '.png'; // Name of downloaded file
+            link.click();
         });
     </script>
 </body>
