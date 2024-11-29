@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>openQR - Free QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>openQR</h1>
+    <h2>Free QR Code Generator</h2>
+    <input type="text" id="inputText" placeholder="Enter some text or a URL" style="width: 300px; padding: 10px;">
+    <button id="generateBtn" style="padding: 10px 20px;">Generate QR Code</button>
+    <div id="qrcode"></div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', () => {
+            const text = document.getElementById('inputText').value;
+            const qrCodeDiv = document.getElementById('qrcode');
+
+            // Clear any existing QR code
+            qrCodeDiv.innerHTML = '';
+
+            if (text.trim()) {
+                // Generate the QR Code
+                QRCode.toString(text, { type: 'svg' }, (error, svg) => {
+                    if (error) {
+                        console.error(error);
+                        alert('Error generating QR Code.');
+                    } else {
+                        qrCodeDiv.innerHTML = svg;
+                    }
+                });
+            } else {
+                alert('Please enter some text or a URL.');
+            }
+        });
+    </script>
+</body>
+
+</html>
