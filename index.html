@@ -15,7 +15,14 @@
         }
 
         footer {
-            bottom: 0px;
+            position: fixed;
+            bottom: 0;
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            padding-bottom: 20px;
         }
 
         #qrcode {
@@ -40,7 +47,8 @@
             background-color: #45a049;
         }
 
-        #imageSizeSelect {
+        #imageSizeSelect,
+        #fileFormatSelect {
             display: none;
             padding: 10px 15px;
             text-align: center;
@@ -49,11 +57,15 @@
 </head>
 
 <body>
-    <h1>openQR</h1>
+    <h1>openQR.net</h1>
     <h2>Free QR Code Generator</h2>
     <input type="text" id="inputText" placeholder="Enter some text or a URL" style="width: 300px; padding: 10px;">
     <button id="generateBtn" style="padding: 10px 20px;">Generate QR Code</button>
     <canvas id="qrCanvas" style="display: none;"></canvas>
+    <select id="fileFormatSelect">
+        <option value="svg">SVG</option>
+        <option value="png">PNG</option>
+    </select>
     <select id="imageSizeSelect">
         <option value="128">128 px</option>
         <option value="256">256 px</option>
@@ -62,25 +74,32 @@
         <option value="2048">2048 px</option>
     </select>
     <button id="downloadBtn">Download QR Code</button>
-    <footer>
-        <span>Created by</span>
-        <a href="https://benji.to">Benjamin Doll</a>
-    </footer>
 
+    <footer>
+        <div>
+            <span>Created by</span>
+            <a href="https://benji.to">Benjamin Doll</a>
+        </div>
+        <div>
+            <span class="contact">
+                contact: <a
+                    href="javascript:location='mailto:\u0068\u0075\u006d\u0061\u006e\u0040\u0062\u0065\u006e\u006a\u0069\u002e\u0074\u006f';void 0">human[at]benji.to</a>
+            </span>
+        </div>
+    </footer>
     <script>
         const generateBtn = document.getElementById('generateBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const qrCanvas = document.getElementById('qrCanvas');
         const inputText = document.getElementById('inputText');
         const imageSizeSelect = document.getElementById('imageSizeSelect');
+        const fileFormatSelect = document.getElementById('fileFormatSelect');
 
         generateBtn.addEventListener('click', () => {
             const text = inputText.value;
 
-            // Clear previous QR code and hide the download button
+            // Clear previous QR code
             qrCanvas.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            imageSizeSelect.style.display = 'none';
 
             if (text.trim()) {
                 // Generate QR code on canvas
@@ -90,8 +109,8 @@
                         alert('Error generating QR Code. Please refresh the page and try again.');
                     } else {
                         qrCanvas.style.display = 'block';
+                        fileFormatSelect.style.display = 'inline-block';
                         downloadBtn.style.display = 'inline-block';
-                        imageSizeSelect.style.display = 'inline-block';
                     }
                 });
             } else {
@@ -99,29 +118,52 @@
             }
         });
 
+        fileFormatSelect.addEventListener('change', () => {
+            fileFormatSelect.value === 'png' ? imageSizeSelect.style.display = 'inline-block' : imageSizeSelect.style.display = 'none';
+        })
+
         downloadBtn.addEventListener('click', () => {
             const selectedSize = parseInt(imageSizeSelect.value, 10); // Get the selected size
+            const selectedFormat = fileFormatSelect.value; // Get the selected file format
 
-            // Create a temporary canvas for the download
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = selectedSize;
-            tempCanvas.height = selectedSize;
+            if (selectedFormat === 'png') {
+                // Create a temporary canvas for the download
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = selectedSize;
+                tempCanvas.height = selectedSize;
 
-            // Generate the QR code again on the temporary canvas
-            QRCode.toCanvas(tempCanvas, inputText.value, { width: selectedSize }, (error) => {
-                if (error) {
-                    console.error(error);
-                    alert('Error downloading QR code. Please refresh the page and try again.');
-                    return;
-                }
+                // Generate the QR code on the temporary canvas
+                QRCode.toCanvas(tempCanvas, inputText.value, { width: selectedSize }, (error) => {
+                    if (error) {
+                        console.error(error);
+                        alert('Error generating the QR Code for download.');
+                        return;
+                    }
+                    // Convert the temporary canvas to a PNG image and trigger download
+                    const link = document.createElement('a');
+                    link.href = tempCanvas.toDataURL('image/png');
+                    link.download = 'openQR_' + getCurrentTimestamp() + '_' + selectedSize + 'px' + '.png'; // Filename to download
+                    link.click();
+                });
+            } else if (selectedFormat === 'svg') {
+                // Generate the QR code as an SVG
+                QRCode.toString(inputText.value, { type: 'svg', width: selectedSize }, (error, svgString) => {
+                    if (error) {
+                        console.error(error);
+                        alert('Error generating the QR Code for download.');
+                        return;
+                    }
 
-                // Download canvas as PNG
-                const link = document.createElement('a');
-                link.href = tempCanvas.toDataURL('image/png');
-                link.download = 'openQR_' + getCurrentTimestamp() + '_' + selectedSize + 'px' + '.png'; // Filename to download
-                link.click();
-            });
+                    // Create a Blob for the SVG and trigger download
+                    const blob = new Blob([svgString], { type: 'image/svg+xml' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'openQR_' + getCurrentTimestamp() + '.svg'; // Filename to download
+                    link.click();
+                });
+            }
         });
+
 
     </script>
 </body>
