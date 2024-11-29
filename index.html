@@ -1,49 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#"">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- metadata -->
     <title>openQR.net - Free QR Code Generator</title>
+    <meta name="description" content="An open-source, free-forever QR code generator" />
+    <meta charset=" UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <meta property="og:title" content="openQR.net" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://openQR.net" />
+    <meta property="og:image" content="https://openQR.net/img/screenshot_wide.png" />
+    <!-- scripts and styles -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script src="js/Timestamp.js"></script>
     <link rel="stylesheet" href="css/index.css" type="text/css" />
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
-    <h1>openQR.net</h1>
-    <h2>Free QR Code Generator</h2>
-    <input type="text" id="inputText" placeholder="Enter some text or a URL" style="width: 300px; padding: 10px;">
-    <button id="generateBtn" style="padding: 10px 20px;">Generate QR Code</button>
-    <canvas id="qrCanvas" style="display: none;"></canvas>
-    <select id="fileFormatSelect">
-        <option value="svg">SVG</option>
-        <option value="png">PNG</option>
-    </select>
-    <select id="imageSizeSelect">
-        <option value="128">128 px</option>
-        <option value="256">256 px</option>
-        <option selected="selected" value="512">512 px</option>
-        <option value="1024">1024 px</option>
-        <option value="2048">2048 px</option>
-    </select>
-    <button id="downloadBtn">Download QR Code</button>
+    <div id="main">
+        <header class="flex-center">
+            <div class="flex-center header-row">
+                <img src="/android-chrome-192x192.png" style="width: 48px; height: 48px;" />
+                <h1>openQR.net</h1>
+            </div>
+            <h3>Free QR Code Generator</h2>
+        </header>
+        <noscript>Please enable JavaScript to use this page.</noscript>
+        <div class="input-col flex-center">
+            <input type="text" id="inputText" class="input-generic" placeholder="Enter some text or a URL...">
+            <button id="generateBtn" class="btn-generic" style="padding: 20px 20px; font-size: large;">Generate QR
+                Code</button>
+        </div>
+        <canvas id="qrCanvas" style="display: none;"></canvas>
+        <label id="downloadLabel" style="font-size: small; display: none;">Download As:</label>
+        <div id="downloadOptions" class="output-row flex-center" style="display: none">
+            <select id="fileFormatSelect" class="dropdown">
+                <option value="png">PNG</option>
+                <option value="svg">SVG</option>
+            </select>
+            <select id="imageSizeSelect" class="dropdown">
+                <option value="128">128px</option>
+                <option value="256">256px</option>
+                <option selected="selected" value="512">512 px</option>
+                <option value="1024">1024px</option>
+                <option value="2048">2048px</option>
+            </select>
+            <button id="downloadBtn">Download QR Code</button>
+        </div>
+    </div>
 
     <footer>
-        <div>
-            <span>Created by</span>
+        <div class="footer-info">
+            <span>Created by:</span>
             <a href="https://benji.to">Benjamin Doll</a>
         </div>
         <div>|</div>
-        <div>
-            <span class="contact">
-                <span>Contact:</span>
-                <a
-                    href="javascript:location='mailto:\u0068\u0075\u006d\u0061\u006e\u0040\u006f\u0070\u0065\u006e\u0051\u0052\u002e\u006e\u0065\u0074';void 0">
-                    <script
-                        type="text/javascript">document.write('\u0068\u0075\u006d\u0061\u006e\u0040\u006f\u0070\u0065\u006e\u0051\u0052\u002e\u006e\u0065\u0074')</script>
-                </a>
-            </span>
+        <div class="footer-info">
+            <span>About:</span>
+            <a href="README.html" style="margin: 5px">readme.md</a>
+        </div>
+        <div>|</div>
+        <div class="footer-info">
+            <span>Contact:</span>
+            <a
+                href="javascript:location='mailto:\u0068\u0075\u006d\u0061\u006e\u0040\u006f\u0070\u0065\u006e\u0051\u0052\u002e\u006e\u0065\u0074';void 0">
+                <script
+                    type="text/javascript">document.write('\u0068\u0075\u006d\u0061\u006e\u0040\u006f\u0070\u0065\u006e\u0051\u0052\u002e\u006e\u0065\u0074')</script>
+            </a>
         </div>
     </footer>
     <script src="js/index.js"></script>

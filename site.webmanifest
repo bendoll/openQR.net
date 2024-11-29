@@ -1,0 +1,38 @@
+{
+    "name": "openQR.net | Free QR Code Generator",
+    "short_name": "openQR.net",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff",
+
+    "screenshots": [
+        {
+         "src": "img/screenshot_wide.png",
+          "sizes": "1280x720",
+          "type": "image/png",
+          "form_factor": "wide",
+          "label": "Main page displaying QR code generator"
+        },
+        {
+         "src": "img/screenshot_narrow.png",
+          "sizes": "505x823",
+          "type": "image/png",
+          "form_factor": "narrow",
+          "label": "Main page displaying QR code generator"
+        }
+    ]
+    
+}
