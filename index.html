@@ -14,6 +14,10 @@
             margin-top: 50px;
         }
 
+        footer {
+            bottom: 0px;
+        }
+
         #qrcode {
             margin-top: 20px;
         }
@@ -35,6 +39,12 @@
         #downloadBtn:hover {
             background-color: #45a049;
         }
+
+        #imageSizeSelect {
+            display: none;
+            padding: 10px 15px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -44,13 +54,25 @@
     <input type="text" id="inputText" placeholder="Enter some text or a URL" style="width: 300px; padding: 10px;">
     <button id="generateBtn" style="padding: 10px 20px;">Generate QR Code</button>
     <canvas id="qrCanvas" style="display: none;"></canvas>
+    <select id="imageSizeSelect">
+        <option value="128">128 px</option>
+        <option value="256">256 px</option>
+        <option selected="selected" value="512">512 px</option>
+        <option value="1024">1024 px</option>
+        <option value="2048">2048 px</option>
+    </select>
     <button id="downloadBtn">Download QR Code</button>
+    <footer>
+        <span>Created by</span>
+        <a href="https://benji.to">Benjamin Doll</a>
+    </footer>
 
     <script>
         const generateBtn = document.getElementById('generateBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const qrCanvas = document.getElementById('qrCanvas');
         const inputText = document.getElementById('inputText');
+        const imageSizeSelect = document.getElementById('imageSizeSelect');
 
         generateBtn.addEventListener('click', () => {
             const text = inputText.value;
@@ -58,6 +80,7 @@
             // Clear previous QR code and hide the download button
             qrCanvas.style.display = 'none';
             downloadBtn.style.display = 'none';
+            imageSizeSelect.style.display = 'none';
 
             if (text.trim()) {
                 // Generate QR code on canvas
@@ -68,6 +91,7 @@
                     } else {
                         qrCanvas.style.display = 'block';
                         downloadBtn.style.display = 'inline-block';
+                        imageSizeSelect.style.display = 'inline-block';
                     }
                 });
             } else {
@@ -76,11 +100,29 @@
         });
 
         downloadBtn.addEventListener('click', () => {
-            const link = document.createElement('a');
-            link.href = qrCanvas.toDataURL('image/png'); // Get the canvas content as a PNG
-            link.download = 'openQR_' + getCurrentTimestamp() + '.png'; // Name of downloaded file
-            link.click();
+            const selectedSize = parseInt(imageSizeSelect.value, 10); // Get the selected size
+
+            // Create a temporary canvas for the download
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = selectedSize;
+            tempCanvas.height = selectedSize;
+
+            // Generate the QR code again on the temporary canvas
+            QRCode.toCanvas(tempCanvas, inputText.value, { width: selectedSize }, (error) => {
+                if (error) {
+                    console.error(error);
+                    alert('Error downloading QR code. Please refresh the page and try again.');
+                    return;
+                }
+
+                // Download canvas as PNG
+                const link = document.createElement('a');
+                link.href = tempCanvas.toDataURL('image/png');
+                link.download = 'openQR_' + getCurrentTimestamp() + '_' + selectedSize + 'px' + '.png'; // Filename to download
+                link.click();
+            });
         });
+
     </script>
 </body>
 
