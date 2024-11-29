@@ -12,7 +12,7 @@ openQR.net is designed to be versatile, yet easy to use. Just enter some text or
 
 ### Open-Source
 
-Anyone can review the source code and verify that no personal information is collected and no generated QR codes are stored after creation. openQR.net is made available under the GNU GPL-v3 license, which basically means you can do whatever you want with this site and my code, but anything you create with it must also be made open-source under the same license.
+Anyone can review the source code and verify that no personal information is collected and no generated QR codes are stored after creation. openQR.net is made available under the [GNU GPL-v3 license](https://www.tldrlegal.com/license/gnu-general-public-license-v3-gpl-3), which basically means you can do whatever you want with this site and my code, but anything you create with it must also be made open-source under the same license.
 
 ### Free Forever
 
