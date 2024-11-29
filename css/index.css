@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    div {
+        padding: 0px 5px;
+    }
+}
+
+#qrcode {
+    margin-top: 20px;
+}
+
+canvas {
+    display: block;
+    margin: 20px auto;
+}
+
+#downloadBtn {
+    display: none;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#downloadBtn:hover {
+    background-color: #45a049;
+}
+
+#imageSizeSelect,
+#fileFormatSelect {
+    display: none;
+    padding: 10px 15px;
+    text-align: center;
+}

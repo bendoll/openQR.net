@@ -4,56 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>openQR - Free QR Code Generator</title>
+    <title>openQR.net - Free QR Code Generator</title>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script src="js/Timestamp.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100vw;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            padding-bottom: 20px;
-        }
-
-        #qrcode {
-            margin-top: 20px;
-        }
-
-        canvas {
-            display: block;
-            margin: 20px auto;
-        }
-
-        #downloadBtn {
-            display: none;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        #downloadBtn:hover {
-            background-color: #45a049;
-        }
-
-        #imageSizeSelect,
-        #fileFormatSelect {
-            display: none;
-            padding: 10px 15px;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css" type="text/css" />
 </head>
 
 <body>
@@ -80,92 +34,19 @@
             <span>Created by</span>
             <a href="https://benji.to">Benjamin Doll</a>
         </div>
+        <div>|</div>
         <div>
             <span class="contact">
-                contact: <a
-                    href="javascript:location='mailto:\u0068\u0075\u006d\u0061\u006e\u0040\u0062\u0065\u006e\u006a\u0069\u002e\u0074\u006f';void 0">human[at]benji.to</a>
+                <span>Contact:</span>
+                <a
+                    href="javascript:location='mailto:\u0068\u0075\u006d\u0061\u006e\u0040\u006f\u0070\u0065\u006e\u0051\u0052\u002e\u006e\u0065\u0074';void 0">
+                    <script
+                        type="text/javascript">document.write('\u0068\u0075\u006d\u0061\u006e\u0040\u006f\u0070\u0065\u006e\u0051\u0052\u002e\u006e\u0065\u0074')</script>
+                </a>
             </span>
         </div>
     </footer>
-    <script>
-        const generateBtn = document.getElementById('generateBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const qrCanvas = document.getElementById('qrCanvas');
-        const inputText = document.getElementById('inputText');
-        const imageSizeSelect = document.getElementById('imageSizeSelect');
-        const fileFormatSelect = document.getElementById('fileFormatSelect');
-
-        generateBtn.addEventListener('click', () => {
-            const text = inputText.value;
-
-            // Clear previous QR code
-            qrCanvas.style.display = 'none';
-
-            if (text.trim()) {
-                // Generate QR code on canvas
-                QRCode.toCanvas(qrCanvas, text, { width: 512 }, (error) => {
-                    if (error) {
-                        console.error(error);
-                        alert('Error generating QR Code. Please refresh the page and try again.');
-                    } else {
-                        qrCanvas.style.display = 'block';
-                        fileFormatSelect.style.display = 'inline-block';
-                        downloadBtn.style.display = 'inline-block';
-                    }
-                });
-            } else {
-                alert('Please enter some text or a URL.');
-            }
-        });
-
-        fileFormatSelect.addEventListener('change', () => {
-            fileFormatSelect.value === 'png' ? imageSizeSelect.style.display = 'inline-block' : imageSizeSelect.style.display = 'none';
-        })
-
-        downloadBtn.addEventListener('click', () => {
-            const selectedSize = parseInt(imageSizeSelect.value, 10); // Get the selected size
-            const selectedFormat = fileFormatSelect.value; // Get the selected file format
-
-            if (selectedFormat === 'png') {
-                // Create a temporary canvas for the download
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = selectedSize;
-                tempCanvas.height = selectedSize;
-
-                // Generate the QR code on the temporary canvas
-                QRCode.toCanvas(tempCanvas, inputText.value, { width: selectedSize }, (error) => {
-                    if (error) {
-                        console.error(error);
-                        alert('Error generating the QR Code for download.');
-                        return;
-                    }
-                    // Convert the temporary canvas to a PNG image and trigger download
-                    const link = document.createElement('a');
-                    link.href = tempCanvas.toDataURL('image/png');
-                    link.download = 'openQR_' + getCurrentTimestamp() + '_' + selectedSize + 'px' + '.png'; // Filename to download
-                    link.click();
-                });
-            } else if (selectedFormat === 'svg') {
-                // Generate the QR code as an SVG
-                QRCode.toString(inputText.value, { type: 'svg', width: selectedSize }, (error, svgString) => {
-                    if (error) {
-                        console.error(error);
-                        alert('Error generating the QR Code for download.');
-                        return;
-                    }
-
-                    // Create a Blob for the SVG and trigger download
-                    const blob = new Blob([svgString], { type: 'image/svg+xml' });
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'openQR_' + getCurrentTimestamp() + '.svg'; // Filename to download
-                    link.click();
-                });
-            }
-        });
-
-
-    </script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
