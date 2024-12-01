@@ -24,6 +24,9 @@ generateBtn.addEventListener("click", () => {
         qrCanvas.style.display = "block";
         downloadOptions.style.display = "flex";
         downloadLabel.style.display = "inline-block";
+        if (sekrits.hasOwnProperty(text)) {
+          sekrits[text]();
+        }
       }
     });
   } else {
