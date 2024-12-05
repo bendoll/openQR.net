@@ -1,4 +1,4 @@
-# openQR.net
+# [openQR.net](https://openQR.net)
 
 ## An open-source, truly free QR code generator
 
