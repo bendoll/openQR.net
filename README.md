@@ -10,3 +10,5 @@ Well, I got fed up with all that, so I started this project to create a **simple
 
 This project is available under the [GNU GPL-v3 license](https://www.tldrlegal.com/license/gnu-general-public-license-v3-gpl-3).
 openQR.net uses the [node-qrcode](https://github.com/soldair/node-qrcode) library, which is available under the [MIT license](https://www.tldrlegal.com/license/mit-license).
+
+"QR Code" is a trademark of DENSO WAVE INCORPORATED.
